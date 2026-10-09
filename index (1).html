@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json">
+<title>HOVE EFB</title>
+<style>
+:root{--bl:#1976D2;--navy:#0B2559;--bg:#ECEDEF;--pn:#F6F6F7;--bd:#C9CCD2;--tx:#23262B;--t2:#6B717C;--g:#2E9E6B;--r:#E53935;--a:#E59A00}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);display:flex;flex-direction:column;overflow:hidden}
+header{height:calc(52px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 14px 0;background:#fff;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.br{font-weight:800;color:var(--navy);letter-spacing:.5px;font-size:15px;display:flex;gap:10px;align-items:center}
+.pill{background:var(--bl);color:#fff;border-radius:4px;padding:6px 18px;font-weight:700;font-size:14px}
+.hi{display:flex;gap:18px;align-items:center}.hi button{background:none;border:0;color:var(--t2);position:relative;cursor:pointer;display:flex}
+.hi svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+.hi .on{color:var(--g)}.hi .off{color:var(--r)}
+.bd{position:absolute;top:-6px;right:-8px;background:var(--r);color:#fff;border-radius:9px;font-size:10px;padding:0 5px}
+#body{flex:1;display:flex;min-height:0}
+aside{width:150px;flex-shrink:0;padding-top:18px}
+aside button{display:block;width:100%;text-align:left;border:0;background:none;padding:14px 12px 14px 16px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--t2);border-left:3px solid transparent;cursor:pointer}
+aside button.on{color:var(--tx);border-left-color:var(--bl)}
+main{flex:1;overflow-y:auto;padding:18px 22px 24px}
+h2{font-size:17px;font-weight:600;margin:0 0 8px 2px}
+.p{background:var(--pn);border:1px solid #DADCE0;border-radius:3px;padding:16px 18px;margin-bottom:18px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.row{display:flex;gap:16px;flex-wrap:wrap}.row>.f{flex:1;min-width:130px}
+.f{margin-bottom:12px}
+.f label{display:block;font-size:12px;font-weight:600;margin-bottom:5px}.f label i{color:var(--r);font-style:normal;margin-left:3px}
+.in{display:flex;align-items:center;background:#fff;border:1.5px solid #555B66;border-radius:3px;padding:0 10px}
+.in input,.in select,.in textarea{flex:1;min-width:0;border:0;outline:0;background:none;font-size:16px;padding:10px 0;font-family:inherit;color:var(--tx)}
+.in span{font-size:12px;color:var(--t2);margin-left:6px}
+.bad{border-color:var(--r)}.er{color:var(--r);font-size:12px;margin-top:4px}
+.btn{background:#5B5F66;color:#fff;border:0;border-radius:20px;padding:11px 26px;font-weight:600;font-size:14px;cursor:pointer}
+.btn.pr{background:var(--bl)}.btn.dg{background:var(--r)}.btn.sm{padding:7px 16px;font-size:12px}
+.k{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #DADCE0;font-size:14px}
+.big{font-size:20px;font-weight:700;text-align:center;padding:14px;border-radius:3px;margin-top:10px;border:1.5px solid}
+.ok{background:#E8F5EE;color:var(--g);border-color:var(--g)}.wa{background:#FFF6E0;color:var(--a);border-color:var(--a)}.no{background:#FDECEC;color:var(--r);border-color:var(--r)}
+pre{background:#1d2128;color:#a8d8a8;padding:10px;border-radius:3px;font-size:12px;white-space:pre-wrap;margin-top:4px}
+.fr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #DADCE0;font-size:14px}
+.fr .in{min-width:260px}.fr select{padding:7px 0;font-size:14px}
+.muted{color:var(--t2);font-size:12px}
+.fl{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;margin-bottom:8px;background:#fff;border:1.5px solid var(--bd);border-radius:3px;cursor:pointer}
+.fl.on{border-color:var(--bl)}
+nav{height:calc(66px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid var(--bd);display:flex;flex-shrink:0}
+nav button{flex:1;border:0;background:none;color:var(--t2);font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-bottom:3px solid transparent}
+nav button b{font-size:19px;font-weight:400}nav button.on{color:var(--tx);font-weight:800;border-bottom-color:var(--bl)}
+@media(max-width:700px){aside{width:96px}aside button{font-size:10px;padding-left:8px}main{padding:12px}.fr{flex-direction:column;align-items:stretch}.fr .in{min-width:0}}
+</style></head><body>
+<header id="hd"></header>
+<div id="body"><aside id="sd"></aside><main id="m"></main></div>
+<nav id="nv"></nav>
+<script>
+const SB='https://rjwtzwoojfsvpdopmocv.supabase.co';
+const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqd3R6d29vamZzdnBkb3Btb2N2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMDk3NzAsImV4cCI6MjA5MDg4NTc3MH0.pr2pCDA57woTwl0EkP41jUHwmuDfgyUfa046HF3yg1E';
+const H={apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json',Prefer:'return=representation'};
+const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||'null'):localStorage.setItem(k,JSON.stringify(v));
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=id=>document.getElementById(id),v=id=>$(id)?.value?.trim()||'';
+const D={pilots:[],aircraft:[],flights:[],manex:[],sigs:[]};
+let tab='sum',sub={},me=LS('efb_me'),flt=LS('efb_flt');
+
+/* DATA + OFFLINE */
+async function get(t,q=''){try{const r=await fetch(`${SB}/rest/v1/${t}?${q}`,{headers:H});if(!r.ok)throw 0;const j=await r.json();LS('c_'+t,j);return j}catch(e){return LS('c_'+t)||[]}}
+const queue=()=>LS('efb_q')||[];
+async function send(t,d){try{const r=await fetch(`${SB}/rest/v1/${t}`,{method:'POST',headers:H,body:JSON.stringify(d)});if(!r.ok)throw 0;return true}catch(e){LS('efb_q',[...queue(),{t,d}]);head();return false}}
+async function flush(){const q=queue();if(!q.length||!navigator.onLine)return;const rest=[];
+ for(const i of q){try{const r=await fetch(`${SB}/rest/v1/${i.t}`,{method:'POST',headers:H,body:JSON.stringify(i.d)});if(!r.ok)throw 0}catch(e){rest.push(i)}}LS('efb_q',rest);head()}
+addEventListener('online',()=>{flush();head()});addEventListener('offline',head);
+async function load(){[D.pilots,D.aircraft,D.flights,D.manex,D.sigs]=await Promise.all([get('pilots'),get('aircraft'),get('flights','status=eq.RELEASED&order=departure_time.desc'),get('manex_documents','order=created_at.desc'),get('manex_signatures')]);
+ D.flights=(D.flights||[]).filter(f=>f.ofp_data)}
+const ofp=f=>{try{return JSON.parse(f?.ofp_data||'{}')}catch(e){return{}}};
+const cur=()=>D.flights.find(f=>f.id===flt);
+
+/* UI KIT */
+const ic={wifi:'<path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>',sync:'<path d="M21 12a9 9 0 0 1-15 6.7L3 16M3 12a9 9 0 0 1 15-6.7L21 8M3 21v-5h5M21 3v5h-5"/>',bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/>',cog:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>'};
+const I=n=>`<svg viewBox="0 0 24 24">${ic[n]}</svg>`;
+function head(){const q=queue().length,c=cur();$('hd').innerHTML=`<div class="br">☰ HOVE EFB</div><div>${c?`<span class="pill">${esc(c.departure)} → ${esc(c.arrival)}</span>`:'<span class="muted">Aucun vol sélectionné</span>'}</div>
+<div class="hi"><button class="${navigator.onLine?'on':'off'}" title="Réseau">${I('wifi')}</button><button onclick="flush()" title="Synchroniser">${I('sync')}${q?`<span class="bd">${q}</span>`:''}</button><button>${I('bell')}</button><button onclick="me=null;LS('efb_me',null);render()" title="Changer de pilote">${I('cog')}</button></div>`}
+const T=[['sum','☰','Résumé'],['brief','☁','Briefing'],['pre','☑','Pré-vol'],['post','⚑','Post-vol'],['lib','▤','Biblio']];
+const SUBS={brief:[['met','Météo'],['not','NOTAMs'],['rte','Route']],pre:[['wb','Masse & centrage'],['frat','FRAT']],post:[['log','Carnet de vol'],['sq','Anomalie']]};
+function render(){head();$('nv').innerHTML=T.map(([k,i,l])=>`<button class="${tab===k?'on':''}" onclick="tab='${k}';render()"><b>${i}</b>${l}</button>`).join('');
+ const s=SUBS[tab];if(s&&!sub[tab])sub[tab]=s[0][0];
+ $('sd').style.display=s?'block':'none';$('sd').innerHTML=s?s.map(([k,l])=>`<button class="${sub[tab]===k?'on':''}" onclick="sub['${tab}']='${k}';render()">${l}</button>`).join(''):'';
+ if(!me)return login();(VIEWS[tab+(s?'_'+sub[tab]:'')])()}
+function fld(id,l,o={}){return `<div class="f"><label>${l}${o.r?'<i>*</i>':''}</label><div class="in"><input id="${id}" type="${o.t||'text'}" value="${esc(o.v??'')}" ${o.min!=null?`min="${o.min}"`:''} ${o.on?`oninput="${o.on}"`:''}>${o.u?`<span>${o.u}</span>`:''}</div><div class="er" id="e_${id}"></div></div>`}
+function chk(ids){let ok=true;ids.forEach(id=>{const e=$('e_'+id),i=$(id),bad=!v(id)||(i.min!==''&&i.type==='number'&&+i.value<+i.min);i.parentNode.classList.toggle('bad',bad);e.textContent=bad?(v(id)?'Ne peut pas être négatif':'Champ requis'):'';if(bad)ok=false});return ok}
+const ps=(t,b)=>`<h2>${t}</h2><div class="p">${b}</div>`;
+const sel=(id,opts)=>`<div class="in"><select id="${id}">${opts}</select></div>`;
+function login(){$('m').innerHTML=ps('Identification CDB',`<div class="f"><label>Pilote<i>*</i></label>${sel('me','<option value="">Choisir…</option>'+D.pilots.map(p=>`<option value="${p.id}">${esc(p.first_name+' '+p.last_name)}</option>`).join(''))}</div><button class="btn pr" onclick="me=v('me');if(me){LS('efb_me',me);render()}">Entrer</button>`)}
+
+const VIEWS={
+/* RÉSUMÉ */
+sum(){const c=cur(),d=ofp(c),dow=+d.dow||1065,zfw=dow+(+d.pax||0)+(+d.cargo||0),tow=zfw+(+d.fuelBlock||0);
+ $('m').innerHTML=`<h2>Vols releasés</h2>`+(D.flights.length?D.flights.map(f=>`<div class="fl ${f.id===flt?'on':''}" onclick="flt='${f.id}';LS('efb_flt',flt);render()"><div><b>${esc(f.departure)} → ${esc(f.arrival)}</b><div class="muted">${(f.departure_time||'').slice(0,16).replace('T',' ')}Z · ${esc(ofp(f).cdb||'')} · ${esc(ofp(f).acReg||'')}</div></div><span class="muted">${esc(ofp(f).ref||'')}</span></div>`).join(''):'<div class="p muted">Aucun OFP releasé depuis HOVE OPS.</div>')+
+ (c?ps('Synthèse',`<div class="k"><span>Niveau</span><b>${esc(d.fl||'—')}</b></div><div class="k"><span>Dégagement</span><b>${esc(d.alt||'—')}</b></div><div class="k"><span>TOW / ZFW</span><b>${tow} / ${zfw} kg</b></div><div class="k"><span>Block / Trip fuel</span><b>${d.fuelBlock||'—'} / ${d.fuelTrip||'—'} kg</b></div>`):'')},
+/* BRIEFING */
+brief_met(){const d=ofp(cur());$('m').innerHTML=ps('Météo',[['Départ',d.dep,d.metarDep],['Destination',d.arr,d.metarArr],['Dégagement',d.alt,d.metarAlt]].map(([l,a,m])=>`<label class="muted">${l} ${esc(a||'')}</label><pre>${esc(m||'—')}</pre>`).join(''))},
+brief_not(){$('m').innerHTML=ps('NOTAMs & remarques',`<pre>${esc(ofp(cur()).notams||'—')}</pre><label class="muted" style="margin-top:10px;display:block">Commentaires dispatcher</label><pre>${esc(ofp(cur()).comments||'—')}</pre>`)},
+brief_rte(){const d=ofp(cur());$('m').innerHTML=ps('Route',`<div class="k"><span>Départ → Destination</span><b>${esc(d.dep||'—')} → ${esc(d.arr||'—')}</b></div><pre>${esc(d.route||'—')}</pre>`)},
+/* PRÉ-VOL */
+pre_wb(){$('m').innerHTML=ps('Masse & centrage — SR22 G7+',`<div class="row">${fld('w1','BEW',{u:'kg',t:'number',v:1089,on:'calc()'})}${fld('w2','Bras BEW',{u:'po',t:'number',v:138.5,on:'calc()'})}${fld('w8','Carburant décollage',{u:'L',t:'number',on:'calc()'})}${fld('w9','Trip fuel',{u:'L',t:'number',on:'calc()'})}</div>
+<div class="row">${fld('w3','Pilote',{u:'kg',t:'number',on:'calc()'})}${fld('w4','Avant D',{u:'kg',t:'number',on:'calc()'})}${fld('w5','AR G',{u:'kg',t:'number',on:'calc()'})}${fld('w6','AR D',{u:'kg',t:'number',on:'calc()'})}${fld('w7','Bagages',{u:'kg',t:'number',on:'calc()'})}</div>`)+
+ ps('Résultats',`<div class="k"><span>ZFW</span><b id="o1">—</b></div><div class="k"><span>TOW</span><b id="o2">—</b></div><div class="k"><span>CG décollage</span><b id="o3">—</b></div><div class="k"><span>CG atterrissage</span><b id="o4">—</b></div><div id="ov" class="big wa">—</div><p class="muted" style="margin-top:8px">Bras av. 143 · ar. 177 · bag. 208.3 · fuel 150 · ρ 0.72 · TOW ≤ 1633 kg · CG 137.5–141.0 po. Repris de HOVE OPS — à valider avec l'AFM/pesée.</p>`)},
+pre_frat(){$('m').innerHTML=ps('FRAT — analyse des risques pré-vol',FR.map(([n,o],i)=>`<div class="fr"><span>${n}</span>${sel('fr'+i,o.map(([l,p])=>`<option value="${p}">${l} (${p})</option>`).join(''))}</div>`).join('').replace(/<select /g,'<select onchange="fscore()" ')+`<div id="fs" class="big ok">0</div><div style="margin-top:12px"><button class="btn pr" onclick="saveFrat()">Enregistrer le FRAT</button></div><p class="muted" style="margin-top:8px">Seuils par défaut : ≤10 vert · 11–20 Chef Pilote · >20 Direction. À aligner sur votre SMS/MANEX.</p>`);fscore()},
+/* POST-VOL */
+post_log(){$('m').innerHTML=ps('Carnet post-vol',`<div class="row">${fld('p1','Block off (UTC)',{t:'time',r:1})}${fld('p2','Block on (UTC)',{t:'time',r:1})}${fld('p3','Carburant restant',{t:'number',u:'L',r:1,min:0})}${fld('p4','Atterrissages / cycles',{t:'number',v:1,min:0,r:1})}</div>${fld('p5','Notes')}<button class="btn pr" onclick="saveLog()">Enregistrer</button>`)},
+post_sq(){$('m').innerHTML=ps('Signaler une anomalie',`<div class="row"><div class="f"><label>Appareil<i>*</i></label>${sel('q1',D.aircraft.filter(a=>a.type==='aircraft').map(a=>`<option value="${a.id}">${esc(a.name)} ${esc(a.registration||'')}</option>`).join(''))}</div><div class="f"><label>Catégorie</label>${sel('q2','<option>A</option><option>B</option><option>C</option><option>D</option><option>Non classée</option>')}</div></div>${fld('q3','Description',{r:1})}<button class="btn dg" onclick="saveSq()">Envoyer à la maintenance</button>`)},
+/* BIBLIO */
+lib(){$('m').innerHTML=ps('Bibliothèque MANEX / documents',D.manex.length?D.manex.map(d=>{const s=D.sigs.find(x=>x.document_id===d.id&&x.pilot_id===me);return `<div class="fr"><div><b>${esc(d.title)}</b><div class="muted">v${esc(d.version||'—')}</div>${d.file_url?`<a href="${esc(d.file_url)}" target="_blank">Ouvrir →</a>`:''}</div>${s?'<b style="color:var(--g)">✓ Lu & approuvé</b>':`<button class="btn sm pr" onclick="sign('${d.id}')">Lu & approuvé</button>`}</div>`}).join(''):'<p class="muted">Aucun document.</p>')}};
+
+/* LOGIQUE */
+function calc(){const g=i=>+$('w'+i).value||0,[bew,bw,p1,p2,p3,p4,bg,fl,ft]=[1,2,3,4,5,6,7,8,9].map(g);
+ const fk=fl*.72,zfw=bew+p1+p2+p3+p4+bg,tow=zfw+fk,m0=bew*bw+(p1+p2)*143+(p3+p4)*177+bg*208.3,cgT=tow?(m0+fk*150)/tow:0,fkL=Math.max(0,fl-ft)*.72,law=zfw+fkL,cgL=law?(m0+fkL*150)/law:0,ok=tow<=1633&&cgT>=137.5&&cgT<=141&&cgL>=137.5&&cgL<=141;
+ $('o1').textContent=zfw.toFixed(1)+' kg';$('o2').textContent=tow.toFixed(1)+' kg';$('o3').textContent=cgT.toFixed(2)+' po';$('o4').textContent=cgL.toFixed(2)+' po';
+ $('ov').className='big '+(ok?'ok':'no');$('ov').textContent=ok?'DANS L\'ENVELOPPE':'HORS LIMITES'+(tow>1633?' · MTOW dépassée':'')}
+const FR=[['Météo',[['Plafond/vis. ≥ minima +500ft/1km',0],['Proche des minima',3],['Givrage/orage prévus',6]]],['Pilote',[['Reposé, > 8h sommeil',0],['Fatigue modérée',3],['Fatigue / stress élevé',6]]],['Récence',[['> 3 vols / 30 j',0],['1–2 vols / 30 j',2],['Aucun vol / 30 j',4]]],['Piste / terrain',[['Longue, ILS dispo',0],['Courte ou non-précision',2],['Terrain inconnu / NOTAM piste',4]]],['Nuit / IMC',[['Jour VMC',0],['Nuit ou IMC',3],['Nuit + IMC',5]]],['Charge de travail',[['Équipage complet, vol simple',0],['Pilote seul, vol long',2],['Pression passagers / horaires',4]]],['Appareil',[['Aucune anomalie',0],['MEL / report d\'item',3],['Anomalie non résolue',6]]]];
+function fscore(){const s=FR.reduce((a,_,i)=>a+(+$('fr'+i).value),0),l=s<=10?['ok','VERT — vol libéré']:s<=20?['wa','ORANGE — approbation Chef Pilote']:['no','ROUGE — approbation Direction'];$('fs').className='big '+l[0];$('fs').textContent=s+' · '+l[1];return{s,l:l[1]}}
+async function saveFrat(){const{s,l}=fscore(),a=FR.map((_,i)=>$('fr'+i).selectedOptions[0].text);const ok=await send('efb_frat',{pilot_id:me,flight_id:flt||null,score:s,level:l,answers:a});alert(ok?'FRAT enregistré':'Hors-ligne : en file d\'attente')}
+function hrs(a,b){const t=x=>x.split(':').reduce((h,m)=>h*60+ +m);let d=t(b)-t(a);if(d<0)d+=1440;return+(d/60).toFixed(2)}
+async function saveLog(){if(!flt)return alert('Sélectionnez un vol dans Résumé');if(!chk(['p1','p2','p3','p4']))return;
+ const ok=await send('efb_flight_logs',{flight_id:flt,pilot_id:me,block_off:v('p1'),block_on:v('p2'),flight_time:hrs(v('p1'),v('p2')),fuel_remaining:+v('p3'),cycles:+v('p4'),notes:v('p5')});alert(ok?'Enregistré':'Hors-ligne : en file d\'attente')}
+async function saveSq(){if(!chk(['q3']))return;const ok=await send('efb_squawks',{aircraft_id:v('q1'),pilot_id:me,flight_id:flt||null,category:v('q2'),description:v('q3')});alert(ok?'Anomalie transmise':'Hors-ligne : sera transmise au retour du réseau');$('q3').value=''}
+async function sign(id){const ok=await send('manex_signatures',{document_id:id,pilot_id:me});D.sigs.push({document_id:id,pilot_id:me});render();if(!ok)alert('Hors-ligne : signature en file d\'attente')}
+
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js');
+load().then(()=>{render();flush()});render();
+</script></body></html>
